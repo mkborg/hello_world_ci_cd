@@ -1,0 +1,40 @@
+$(info "SUBDIRS='${SUBDIRS}'")
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# "${SUBDIRS-ALL}" is a set of phony recipes in the form of
+# ".subdir-<name>-all" for each <name> from SUBDIRS variable
+#
+SUBDIRS-ALL := $(patsubst %,.subdir-%-all,${SUBDIRS})
+all: ${SUBDIRS-ALL}
+#
+.PHONY: ${SUBDIRS-ALL}
+${SUBDIRS-ALL}:
+	$(MAKE) -C $(patsubst .subdir-%-all,%,$@) all
+#
+# "subdirs-all" is a short-cut phony target for "${SUBDIRS-ALL}".
+# Does "make all" in each sub dir specified in SUBDIRS variable.
+#
+.PHONY: subdirs-all
+subdirs-all: ${SUBDIRS-ALL}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+# "${SUBDIRS-CLEAN}" is a set of phony recipes in the form of
+# ".subdir-<name>-clean" for each <name> from SUBDIRS variable
+#
+SUBDIRS-CLEAN := $(patsubst %,.subdir-%-clean,${SUBDIRS})
+clean: ${SUBDIRS-CLEAN}
+#
+.PHONY: ${SUBDIRS-CLEAN}
+${SUBDIRS-CLEAN}:
+	$(MAKE) -C $(patsubst .subdir-%-clean,%,$@) clean
+#
+# "subdirs-clean" is a short-cut phony target for "${SUBDIRS-CLEAN}".
+# Does "make clean" in each sub dir specified in SUBDIRS variable.
+#
+.PHONY: subdirs-clean
+subdirs-clean: ${SUBDIRS-CLEAN}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
