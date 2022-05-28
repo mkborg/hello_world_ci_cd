@@ -1,0 +1,25 @@
+# The following is 'name' of 'workflow'
+name: CI with 'make' on 'ubuntu-latest'
+
+# This ('make.yml') 'workflow' shall launch 'make' on each 'git push'
+
+on:
+  push:
+    branches: [ main ]
+
+# multiple 'jobs' are permitted and will be executed in parallel to each other
+jobs:
+
+  # this ('job_to_make_on_ubuntu-latest') is arbitrary name for the following 'job'
+  job_to_make_on_ubuntu-latest:
+
+    # shall be executed on 'ubuntu-latest'
+    runs-on: ubuntu-latest
+
+    steps:
+    # 'check out' git repository contents
+    - uses: actions/checkout@v3
+
+    # launch 'make'
+    - name: Make
+      run: make
