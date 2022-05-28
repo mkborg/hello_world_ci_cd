@@ -6,8 +6,11 @@ on:
   push:
     branches: [ main ]
 
+# multiple 'jobs' are permitted and will be executed in parallel to each other
 jobs:
-  build:
+
+  # this ('job_to_make_on_ubuntu-latest') is arbitrary name for the following 'job'
+  job_to_make_on_ubuntu-latest:
 
     # shall be executed on 'ubuntu-latest'
     runs-on: ubuntu-latest
