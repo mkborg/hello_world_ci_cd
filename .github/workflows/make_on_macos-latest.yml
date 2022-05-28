@@ -23,3 +23,7 @@ jobs:
     # launch 'make'
     - name: Make
       run: make
+
+    # launch built binary to 'ckeck' it
+    - name: Check
+      run: make check

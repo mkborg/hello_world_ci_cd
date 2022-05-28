@@ -21,6 +21,25 @@ subdirs-all: ${SUBDIRS-ALL}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 #
+# "${SUBDIRS-CHECK}" is a set of phony recipes in the form of
+# ".subdir-<name>-check" for each <name> from SUBDIRS variable
+#
+SUBDIRS-CHECK := $(patsubst %,.subdir-%-check,${SUBDIRS})
+check: ${SUBDIRS-CHECK}
+#
+.PHONY: ${SUBDIRS-CHECK}
+${SUBDIRS-CHECK}:
+	$(MAKE) -C $(patsubst .subdir-%-check,%,$@) check
+#
+# "subdirs-check" is a short-cut phony target for "${SUBDIRS-CHECK}".
+# Does "make check" in each sub dir specified in SUBDIRS variable.
+#
+.PHONY: subdirs-check
+subdirs-check: ${SUBDIRS-CHECK}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
 # "${SUBDIRS-CLEAN}" is a set of phony recipes in the form of
 # ".subdir-<name>-clean" for each <name> from SUBDIRS variable
 #
