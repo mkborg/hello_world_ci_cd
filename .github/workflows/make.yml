@@ -1,0 +1,21 @@
+name: CI with 'make'
+
+# This ('make.yml') 'workflow' shall launch 'make' on each 'git push'
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    # shall be executed on 'ubuntu-latest'
+    runs-on: ubuntu-latest
+
+    steps:
+    # 'check out' git repository contents
+    - uses: actions/checkout@v3
+
+    # launch 'make'
+    - name: Make
+      run: make
