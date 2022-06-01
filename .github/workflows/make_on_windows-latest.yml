@@ -5,7 +5,9 @@ name: CI with 'make' on 'windows-latest'
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - windows
 
 # multiple 'jobs' are permitted and will be executed in parallel to each other
 jobs:

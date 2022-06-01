@@ -5,7 +5,9 @@ name: CI with 'make' on 'macos-latest'
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - macos
 
 # multiple 'jobs' are permitted and will be executed in parallel to each other
 jobs:
