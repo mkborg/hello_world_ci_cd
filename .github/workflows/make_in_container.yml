@@ -1,0 +1,41 @@
+# The following is 'name' of 'workflow'
+name: CI with 'make' in 'container'
+
+# This ('make.yml') 'workflow' shall launch 'make' on each 'git push'
+
+on:
+  push:
+    branches:
+      - main
+      - linux
+      - ubuntu
+
+# multiple 'jobs' are permitted and will be executed in parallel to each other
+jobs:
+
+  # this ('job_to_make_in_container') is arbitrary name for the following 'job'
+  job_to_make_in_container:
+
+    # shall be executed on 'ubuntu-latest'
+    runs-on: ubuntu-latest
+
+    container:
+      # https://hub.docker.com/
+      image: node:14.16
+
+    steps:
+    # 'check out' git repository contents
+    - uses: actions/checkout@v3
+
+    # launch 'make'
+    - name: Make
+      run: make
+
+    # launch built binary to 'ckeck' it
+    - name: Check
+      run: make check
+
+    - name: multi-line command
+      run: |
+        pwd
+        mount
