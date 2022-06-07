@@ -19,25 +19,26 @@ jobs:
     # shall be executed on 'ubuntu-latest'
     runs-on: ubuntu-latest
 
+    steps:
+    # 'check out' git repository contents
+    - uses: actions/checkout@v3
+
     container:
       # https://hub.docker.com/
       #image: ghcr.io/mkborg/hello_world_ci_cd:release
       #image: ghcr.io/mkborg/ghtoken_product_demo:busybox
       image: ghcr.io/mkborg/ghtoken_product_demo:debian
 
-    steps:
-    # 'check out' git repository contents
-    - uses: actions/checkout@v3
+      steps:
+      # launch 'make'
+      - name: Make
+        run: make
 
-    # launch 'make'
-    - name: Make
-      run: make
+      # launch built binary to 'ckeck' it
+      - name: Check
+        run: make check
 
-    # launch built binary to 'ckeck' it
-    - name: Check
-      run: make check
-
-    - name: multi-line command
-      run: |
-        pwd
-        mount
+      - name: multi-line command
+        run: |
+          pwd
+          mount
