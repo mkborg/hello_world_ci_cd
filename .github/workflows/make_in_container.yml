@@ -21,7 +21,7 @@ jobs:
 
     container:
       # https://hub.docker.com/
-      image: node:14.16
+      image: ghcr.io/mkborg/hello_world_ci_cd:release
 
     steps:
     # 'check out' git repository contents
