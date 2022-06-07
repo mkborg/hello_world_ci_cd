@@ -30,6 +30,9 @@ jobs:
       run: |
         pwd
         mount
+        echo $PATH
+        cat /etc/*release
+        which cat
 
     # 'check out' git repository contents
     - uses: actions/checkout@v3
