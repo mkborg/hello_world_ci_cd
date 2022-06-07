@@ -13,28 +13,22 @@ on:
 # multiple 'jobs' are permitted and will be executed in parallel to each other
 jobs:
 
+  # Note: github's 'actions/checkout@v3' fails if launched in foreign container
   checkout_job:
     # shall be executed on 'ubuntu-latest'
     runs-on: ubuntu-latest
 
     steps:
-    - name: multi-line command
-      run: |
-        pwd
-        mount
-        echo $PATH
-        ls -l /etc/*release
-        cat /etc/*release
-        which cat
-        which grep
-
     # 'check out' git repository contents
     - uses: actions/checkout@v3
 
   # this ('job_to_make_in_container') is arbitrary name for the following 'job'
   job_to_make_in_container:
+    # make sure 'checkout_job' finished
     needs:
       - checkout_job
+
+    # FIXME: make sure 'git repository contents' are copied from 'checkout_job'
 
     # shall be executed on 'ubuntu-latest'
     runs-on: ubuntu-latest
@@ -42,8 +36,9 @@ jobs:
     container:
       # https://hub.docker.com/
       #image: ghcr.io/mkborg/hello_world_ci_cd:release
-      image: ghcr.io/mkborg/ghtoken_product_demo:busybox
-      #image: ghcr.io/mkborg/ghtoken_product_demo:debian
+      # Note: 'make' and 'gcc'/'g++' are missing in 'busybox' container
+      #image: ghcr.io/mkborg/ghtoken_product_demo:busybox
+      image: ghcr.io/mkborg/ghtoken_product_demo:debian
 
     steps:
     - name: multi-line command
@@ -51,10 +46,7 @@ jobs:
         pwd
         mount
         echo $PATH
-        ls -l /etc/*release
-        cat /etc/*release
-        which cat
-        which grep
+        ls -l
 
     # launch 'make'
     - name: Make
