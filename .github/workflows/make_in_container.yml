@@ -13,8 +13,28 @@ on:
 # multiple 'jobs' are permitted and will be executed in parallel to each other
 jobs:
 
+  checkout_job:
+    # shall be executed on 'ubuntu-latest'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: multi-line command
+      run: |
+        pwd
+        mount
+        echo $PATH
+        ls -l /etc/*release
+        cat /etc/*release
+        which cat
+        which grep
+
+    # 'check out' git repository contents
+    - uses: actions/checkout@v3
+
   # this ('job_to_make_in_container') is arbitrary name for the following 'job'
   job_to_make_in_container:
+    needs:
+      - checkout_job
 
     # shall be executed on 'ubuntu-latest'
     runs-on: ubuntu-latest
@@ -31,11 +51,10 @@ jobs:
         pwd
         mount
         echo $PATH
+        ls -l /etc/*release
         cat /etc/*release
         which cat
-
-    # 'check out' git repository contents
-    - uses: actions/checkout@v3
+        which grep
 
     # launch 'make'
     - name: Make
