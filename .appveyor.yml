@@ -1,0 +1,41 @@
+# https://www.appveyor.com/docs/appveyor-yml/
+# branches to build
+branches:
+  # whitelist
+  only:
+    - appveyor
+    #- master
+    #- production
+
+  # blacklist
+  except:
+    - gh-pages
+
+# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea)
+skip_tags: true
+
+# set clone depth
+clone_depth: 1                      # clone entire repository history if not defined
+
+
+environment:
+  variable1: value1
+  variable2: value2
+
+# Build worker image (VM template)
+image: Visual Studio 2015
+#image:
+#  - Visual Studio 2017
+#  - Ubuntu
+
+#for:
+#  -
+#    matrix:
+#      only:
+#        - image: Ubuntu
+#
+#    build_script:
+#    - echo Ubuntu build script
+
+# to run your custom scripts instead of automatic MSBuild
+#build_script:
